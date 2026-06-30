@@ -1,0 +1,41 @@
+{
+  "shop": "St Light",
+  "categories": [
+    {
+      "id": "lighting",
+      "name": "Lighting",
+      "icon": "&#128161;",
+      "blurb": "Chandeliers, pendants, bulbs and fittings",
+      "items": [
+        {
+          "id": "chandelier-01",
+          "name": "Crystal Chandelier",
+          "image": "images/lighting/chandelier-01.jpg"
+        },
+        {
+          "id": "pendant-01",
+          "name": "Brass Pendant Lamp",
+          "image": "images/lighting/pendant-01.jpg"
+        }
+      ]
+    },
+    {
+      "id": "solar",
+      "name": "Solar",
+      "icon": "&#9728;",
+      "blurb": "Panels, inverters, batteries and kits",
+      "items": [
+        {
+          "id": "panel-01",
+          "name": "200W Solar Panel",
+          "image": "images/solar/panel-01.jpg"
+        },
+        {
+          "id": "inverter-01",
+          "name": "1000W Inverter",
+          "image": "images/solar/inverter-01.jpg"
+        }
+      ]
+    }
+  ]
+}
