@@ -5,20 +5,15 @@
       "id": "lighting",
       "name": "Lighting",
       "icon": "&#128161;",
-      "blurb": "Chandeliers, pendants, wallbrackets",
+      "blurb": "Chandeliers, pendants, bulbs and fittings",
       "items": [
         {
-          "id": "chandelier 16",
-          "name": "Star Chandelier",
-          "image": "images/lighting/chandelier 16.jpg"
+          "id": "chandelier-01",
+          "name": "Crystal Chandelier",
+          "image": "https://commons.wikimedia.org/wiki/Special:FilePath/Crystal_Chandelier_Garden_(Unsplash).jpg"
         },
         {
           "id": "pendant-01",
-          "name": "Brass Pendant Lamp",
-          "image": "images/lighting/pendant-01.jpg"
-        }
-        {
-          "id": "changelier",
           "name": "Brass Pendant Lamp",
           "image": "images/lighting/pendant-01.jpg"
         }
