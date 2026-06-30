@@ -35,12 +35,13 @@
           "name": "1000W Inverter",
           "image": "images/solar/inverter-01.jpg"
         }
-      ]
-    }
-  ]
-}
-{
+        {
      "id": "panel-02",
      "name": "300W Solar Panel",
      "image": "images/solar/SNADI POWERS STATION 2.png"
    }
+      ]
+    }
+  ]
+}
+
