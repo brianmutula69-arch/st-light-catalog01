@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>St Light — Lighting & Solar Catalog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#15110C;
+    --panel:#1E1810;
+    --panel-2:#272016;
+    --amber:#F2B84B;
+    --amber-deep:#C98A2C;
+    --terracotta:#E07A3E;
+    --cream:#F4EBDB;
+    --cream-dim:#C9BCA4;
+    --bronze:#8C7A5E;
+    --line:rgba(244,235,219,0.10);
+    --radius:18px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(242,184,75,0.10), transparent 60%),
+      var(--bg);
+    color:var(--cream);
+    font-family:'Work Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  a{color:inherit;text-decoration:none;}
+
+  /* ---------- filament divider ---------- */
+  .filament{
+    width:100%; height:18px; margin:0 auto; display:block;
+  }
+  .filament path{
+    fill:none; stroke:var(--amber); stroke-width:1.4; stroke-linecap:round;
+    opacity:0.55;
+  }
+
+  /* ---------- header ---------- */
+  header{
+    padding:54px 24px 30px;
+    text-align:center;
+    position:relative;
+  }
+  .bulb-mark{
+    width:34px; height:34px; margin:0 auto 18px;
+    border-radius:50%;
+    background:radial-gradient(circle at 38% 32%, #FFE7AE, var(--amber) 55%, var(--amber-deep) 100%);
+    box-shadow:0 0 18px 4px rgba(242,184,75,0.35), 0 0 50px 12px rgba(242,184,75,0.12);
+  }
+  h1.shop-name{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(40px,8vw,64px);
+    letter-spacing:0.01em;
+    margin:0;
+    color:var(--cream);
+    text-shadow:0 0 28px rgba(242,184,75,0.18);
+  }
+  h1.shop-name span{ color:var(--amber); font-style:italic; font-weight:500; }
+  .tagline{
+    font-size:14px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--cream-dim);
+    margin:14px 0 6px;
+  }
+  .address{
+    font-size:13.5px;
+    color:var(--bronze);
+    line-height:1.6;
+    max-width:380px;
+    margin:8px auto 0;
+  }
+  .address i{ font-style:normal; color:var(--cream-dim); }
+
+  /* ---------- share / actions bar ---------- */
+  .topbar{
+    max-width:760px; margin:34px auto 0; padding:0 20px;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .crumbs{ font-size:13px; color:var(--cream-dim); }
+  .crumbs b{ color:var(--amber); font-weight:600; }
+  .crumbs button{
+    background:none;border:none;color:var(--cream-dim);
+    font-size:13px;cursor:pointer;text-decoration:underline;
+    padding:0; font-family:inherit;
+  }
+  .iconbtns{ display:flex; gap:10px; }
+  .iconbtn{
+    width:38px;height:38px;border-radius:50%;
+    border:1px solid var(--line);
+    background:var(--panel);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer; color:var(--cream); font-size:16px;
+    transition:border-color .2s, background .2s;
+  }
+  .iconbtn:hover{ border-color:var(--amber-deep); background:var(--panel-2); }
+  .iconbtn.fav-on{ color:var(--terracotta); border-color:var(--terracotta); }
+
+  /* ---------- category grid ---------- */
+  main{ max-width:1080px; margin:0 auto; padding:18px 20px 80px; }
+  .section-label{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:500;
+    font-size:15px; color:var(--bronze); margin:36px 4px 16px;
+  }
+  .cat-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:18px;
+  }
+  .cat-card{
+    position:relative; border-radius:var(--radius);
+    background:linear-gradient(155deg, var(--panel-2), var(--panel));
+    border:1px solid var(--line);
+    padding:30px 26px; cursor:pointer; overflow:hidden;
+    transition:transform .25s ease, border-color .25s ease;
+  }
+  .cat-card:hover{ transform:translateY(-3px); border-color:var(--amber-deep); }
+  .cat-card::after{
+    content:''; position:absolute; right:-40px; top:-40px;
+    width:140px; height:140px; border-radius:50%;
+    background:radial-gradient(circle, rgba(242,184,75,0.18), transparent 70%);
+  }
+  .cat-card.solar::after{
+    background:radial-gradient(circle, rgba(224,122,62,0.22), transparent 70%);
+  }
+  .cat-card .ic{ font-size:26px; margin-bottom:14px; display:block; }
+  .cat-card h3{
+    font-family:'Fraunces', serif; font-weight:600; font-size:24px;
+    margin:0 0 6px; color:var(--cream);
+  }
+  .cat-card p{ margin:0; font-size:13px; color:var(--cream-dim); }
+  .cat-card .count{
+    margin-top:16px; font-size:12px; color:var(--bronze);
+  }
+
+  /* ---------- item grid ---------- */
+  .item-grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+    gap:16px;
+  }
+  .item-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    cursor:pointer;
+    user-select:none;
+    -webkit-user-select:none;
+    transition:transform .18s ease, border-color .18s ease;
+    position:relative;
+  }
+  .item-card:hover{ transform:translateY(-2px); border-color:var(--amber-deep); }
+  .item-card .thumb{
+    width:100%; aspect-ratio:1/1; object-fit:cover; display:block;
+    background:var(--panel-2);
+  }
+  .item-card .label{
+    padding:10px 12px 12px;
+    font-size:13.5px; color:var(--cream);
+  }
+  .item-card .heart{
+    position:absolute; top:8px; right:8px;
+    width:30px; height:30px; border-radius:50%;
+    background:rgba(21,17,12,0.55);
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; color:var(--cream-dim);
+    opacity:0; transition:opacity .18s ease, color .18s ease;
+  }
+  .item-card:hover .heart, .item-card.is-fav .heart{ opacity:1; }
+  .item-card.is-fav .heart{ color:var(--terracotta); }
+  .item-card.is-fav{ border-color:var(--terracotta); }
+  .press-ring{
+    position:absolute; inset:0; border-radius:14px;
+    box-shadow:inset 0 0 0 0 rgba(224,122,62,0.0);
+    pointer-events:none; transition:box-shadow .55s linear;
+  }
+  .item-card.pressing .press-ring{
+    box-shadow:inset 0 0 0 3px rgba(224,122,62,0.9);
+  }
+
+  /* ---------- lightbox ---------- */
+  .lightbox{
+    position:fixed; inset:0; z-index:50;
+    background:rgba(10,8,5,0.92);
+    display:none; align-items:center; justify-content:center;
+    flex-direction:column; padding:24px;
+  }
+  .lightbox.open{ display:flex; }
+  .lightbox img{
+    max-width:min(520px,90vw); max-height:60vh;
+    border-radius:16px; object-fit:cover;
+    box-shadow:0 0 60px rgba(242,184,75,0.10);
+  }
+  .lightbox .lb-name{
+    font-family:'Fraunces', serif; font-size:22px; margin:20px 0 4px; color:var(--cream);
+  }
+  .lightbox .lb-cat{ font-size:12.5px; color:var(--bronze); text-transform:uppercase; letter-spacing:0.12em; margin-bottom:22px;}
+  .lb-actions{ display:flex; gap:12px; }
+  .lb-btn{
+    border:1px solid var(--line); background:var(--panel);
+    color:var(--cream); padding:10px 18px; border-radius:30px;
+    font-size:13.5px; cursor:pointer; display:flex; align-items:center; gap:7px;
+  }
+  .lb-btn.fav-on{ border-color:var(--terracotta); color:var(--terracotta); }
+  .lb-close{
+    position:absolute; top:22px; right:24px;
+    width:40px;height:40px;border-radius:50%;
+    background:var(--panel); border:1px solid var(--line);
+    color:var(--cream); font-size:18px; cursor:pointer;
+  }
+
+  /* ---------- favorites drawer ---------- */
+  .drawer{
+    position:fixed; top:0; right:-380px; width:340px; height:100%;
+    background:var(--panel); border-left:1px solid var(--line);
+    z-index:60; transition:right .3s ease; padding:26px 22px;
+    overflow-y:auto;
+  }
+  .drawer.open{ right:0; }
+  .drawer h2{ font-family:'Fraunces', serif; font-size:22px; margin:6px 0 18px; }
+  .drawer .empty{ color:var(--cream-dim); font-size:13.5px; margin-top:30px; }
+  .fav-row{
+    display:flex; align-items:center; gap:12px;
+    padding:10px 0; border-bottom:1px solid var(--line);
+  }
+  .fav-row img{ width:46px;height:46px;border-radius:8px;object-fit:cover; }
+  .fav-row .nm{ font-size:13.5px; flex:1; }
+  .fav-row .rm{ background:none;border:none;color:var(--bronze);cursor:pointer;font-size:16px; }
+  .drawer-close{
+    position:absolute; top:24px; right:22px; background:none; border:none;
+    color:var(--cream-dim); font-size:18px; cursor:pointer;
+  }
+  .overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:55;
+    display:none;
+  }
+  .overlay.open{ display:block; }
+
+  /* ---------- toast ---------- */
+  .toast{
+    position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:var(--panel-2); border:1px solid var(--amber-deep);
+    color:var(--cream); padding:11px 20px; border-radius:30px;
+    font-size:13px; opacity:0; pointer-events:none; transition:all .25s ease;
+    z-index:70;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  footer{
+    text-align:center; padding:40px 20px 60px; color:var(--bronze); font-size:12.5px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bulb-mark"></div>
+  <h1 class="shop-name">St <span>Light</span></h1>
+  <svg class="filament" viewBox="0 0 300 18" preserveAspectRatio="none"><path d="M0,9 Q25,2 50,9 T100,9 T150,9 T200,9 T250,9 T300,9"/></svg>
+  <div class="tagline">Lighting &amp; Solar, Nairobi</div>
+  <div class="address">
+    <i>Nyamakima, St Light Building, 1st Floor</i><br>
+    Along Duruma Road, and Standard Building, Wabera Street
+  </div>
+</header>
+
+<div class="topbar">
+  <div class="crumbs" id="crumbs">Browsing <b>All categories</b></div>
+  <div class="iconbtns">
+    <div class="iconbtn" id="shareBtn" title="Share this view">&#128279;</div>
+    <div class="iconbtn" id="favBtn" title="Your favorites">&#9825;</div>
+  </div>
+</div>
+
+<main>
+  <div id="categoryView">
+    <div class="section-label">Choose a category</div>
+    <div class="cat-grid" id="catGrid"></div>
+  </div>
+
+  <div id="itemView" style="display:none;">
+    <div class="section-label" id="itemSectionLabel">Items</div>
+    <div class="item-grid" id="itemGrid"></div>
+  </div>
+</main>
+
+<footer>
+  St Light &middot; Nyamakima, 1st Floor &middot; Duruma Road &amp; Wabera Street, Nairobi
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <div class="lb-close" id="lbClose">&times;</div>
+  <img id="lbImg" src="" alt="">
+  <div class="lb-name" id="lbName"></div>
+  <div class="lb-cat" id="lbCat"></div>
+  <div class="lb-actions">
+    <div class="lb-btn" id="lbFav">&#9825; Save</div>
+    <div class="lb-btn" id="lbShare">&#128279; Share item</div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+<div class="drawer" id="drawer">
+  <button class="drawer-close" id="drawerClose">&times;</button>
+  <h2>Your favorites</h2>
+  <div id="favList"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- catalog is loaded from catalog.json (same folder on GitHub Pages) ---------- */
+let CATALOG = { shop: "St Light", categories: [] };
+
+const FAV_KEY = 'stlight_favorites';
+function loadFavorites(){
+  try{ return JSON.parse(localStorage.getItem(FAV_KEY)) || {}; }
+  catch(e){ return {}; }
+}
+function saveFavorites(){
+  try{ localStorage.setItem(FAV_KEY, JSON.stringify(favorites)); }
+  catch(e){ /* storage unavailable, fail silently */ }
+}
+
+let favorites = loadFavorites(); // id -> item, persisted on this device via localStorage
+let currentCategory = null;
+let currentItem = null;
+
+function findItem(catId, itemId){
+  const cat = CATALOG.categories.find(c=>c.id===catId);
+  if(!cat) return null;
+  return cat.items.find(i=>i.id===itemId);
+}
+
+function renderCategories(){
+  const grid = document.getElementById('catGrid');
+  grid.innerHTML = '';
+  CATALOG.categories.forEach(cat=>{
+    const div = document.createElement('div');
+    div.className = 'cat-card' + (cat.id==='solar' ? ' solar' : '');
+    div.innerHTML = `
+      <span class="ic">${cat.icon}</span>
+      <h3>${cat.name}</h3>
+      <p>${cat.blurb}</p>
+      <div class="count">${cat.items.length} items</div>`;
+    div.onclick = ()=> openCategory(cat.id);
+    grid.appendChild(div);
+  });
+}
+
+function openCategory(catId){
+  currentCategory = catId;
+  const cat = CATALOG.categories.find(c=>c.id===catId);
+  document.getElementById('categoryView').style.display='none';
+  document.getElementById('itemView').style.display='block';
+  document.getElementById('itemSectionLabel').textContent = cat.name;
+  document.getElementById('crumbs').innerHTML = `<button id="backBtn">All categories</button> &nbsp;/&nbsp; <b>${cat.name}</b>`;
+  document.getElementById('backBtn').onclick = showCategories;
+  renderItems(cat);
+  history.replaceState(null,'', `?category=${catId}`);
+}
+
+function showCategories(){
+  currentCategory = null;
+  document.getElementById('itemView').style.display='none';
+  document.getElementById('categoryView').style.display='block';
+  document.getElementById('crumbs').innerHTML = `Browsing <b>All categories</b>`;
+  history.replaceState(null,'', location.pathname);
+}
+
+function renderItems(cat){
+  const grid = document.getElementById('itemGrid');
+  grid.innerHTML='';
+  cat.items.forEach(item=>{
+    const card = document.createElement('div');
+    card.className = 'item-card' + (favorites[item.id] ? ' is-fav' : '');
+    card.innerHTML = `
+      <img class="thumb" src="${item.image}" alt="${item.name}">
+      <div class="heart">&#9825;</div>
+      <div class="press-ring"></div>
+      <div class="label">${item.name}</div>`;
+    let pressTimer;
+    const startPress = (e)=>{
+      card.classList.add('pressing');
+      pressTimer = setTimeout(()=>{
+        toggleFavorite(item, cat);
+        card.classList.remove('pressing');
+      }, 550);
+    };
+    const cancelPress = ()=> { clearTimeout(pressTimer); card.classList.remove('pressing'); };
+    card.addEventListener('mousedown', startPress);
+    card.addEventListener('touchstart', startPress);
+    ['mouseup','mouseleave','touchend','touchcancel'].forEach(ev=>card.addEventListener(ev, cancelPress));
+    card.querySelector('.heart').onclick = (e)=>{ e.stopPropagation(); toggleFavorite(item, cat); };
+    card.onclick = (e)=>{ if(!card.classList.contains('pressing')) openLightbox(item, cat); };
+    grid.appendChild(card);
+  });
+}
+
+function toggleFavorite(item, cat){
+  if(favorites[item.id]){ delete favorites[item.id]; showToast('Removed from favorites'); }
+  else { favorites[item.id] = {...item, categoryId:cat.id, categoryName:cat.name}; showToast('Saved to favorites'); }
+  saveFavorites();
+  if(currentCategory) renderItems(CATALOG.categories.find(c=>c.id===currentCategory));
+  renderFavDrawer();
+  if(currentItem && currentItem.id===item.id) syncLightboxFavState();
+}
+
+function openLightbox(item, cat){
+  currentItem = item;
+  document.getElementById('lbImg').src = item.image;
+  document.getElementById('lbImg').alt = item.name;
+  document.getElementById('lbName').textContent = item.name;
+  document.getElementById('lbCat').textContent = cat.name;
+  syncLightboxFavState();
+  document.getElementById('lightbox').classList.add('open');
+  history.replaceState(null,'', `?category=${cat.id}&item=${item.id}`);
+}
+function syncLightboxFavState(){
+  const btn = document.getElementById('lbFav');
+  const isFav = !!favorites[currentItem.id];
+  btn.classList.toggle('fav-on', isFav);
+  btn.innerHTML = isFav ? '&#10084; Saved' : '&#9825; Save';
+}
+document.getElementById('lbClose').onclick = ()=>{
+  document.getElementById('lightbox').classList.remove('open');
+  history.replaceState(null,'', currentCategory ? `?category=${currentCategory}` : location.pathname);
+};
+document.getElementById('lbFav').onclick = ()=>{
+  const cat = CATALOG.categories.find(c=>c.id===currentCategory);
+  toggleFavorite(currentItem, cat);
+};
+document.getElementById('lbShare').onclick = ()=>{
+  copyLink(`?category=${currentCategory}&item=${currentItem.id}`, 'Item link copied');
+};
+
+document.getElementById('shareBtn').onclick = ()=>{
+  if(currentCategory) copyLink(`?category=${currentCategory}`, 'Category link copied');
+  else copyLink('', 'Catalog link copied');
+};
+
+function copyLink(query, message){
+  const url = location.origin + location.pathname + query;
+  navigator.clipboard?.writeText(url).catch(()=>{});
+  showToast(message);
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>t.classList.remove('show'), 1800);
+}
+
+/* favorites drawer */
+function renderFavDrawer(){
+  const list = document.getElementById('favList');
+  const items = Object.values(favorites);
+  if(items.length===0){
+    list.innerHTML = '<div class="empty">Long-press any item to save it here.</div>';
+    return;
+  }
+  list.innerHTML = items.map(it=>`
+    <div class="fav-row" data-id="${it.id}">
+      <img src="${it.image}" alt="">
+      <div class="nm">${it.name}<br><span style="color:var(--bronze);font-size:11.5px;">${it.categoryName}</span></div>
+      <button class="rm">&times;</button>
+    </div>`).join('');
+  list.querySelectorAll('.fav-row .rm').forEach(btn=>{
+    btn.onclick = ()=>{
+      const id = btn.closest('.fav-row').dataset.id;
+      delete favorites[id];
+      saveFavorites();
+      renderFavDrawer();
+      if(currentCategory) renderItems(CATALOG.categories.find(c=>c.id===currentCategory));
+    };
+  });
+}
+document.getElementById('favBtn').onclick = ()=>{
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+};
+document.getElementById('drawerClose').onclick = closeDrawer;
+document.getElementById('overlay').onclick = closeDrawer;
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+/* ---------- boot: load catalog.json, then read ?category & ?item from URL for shared links ---------- */
+async function boot(){
+  try{
+    const res = await fetch('catalog.json');
+    CATALOG = await res.json();
+  }catch(e){
+    document.getElementById('catGrid').innerHTML =
+      '<p style="color:var(--cream-dim);">Could not load catalog.json. Make sure it sits next to this index.html file.</p>';
+    return;
+  }
+  renderCategories();
+  renderFavDrawer();
+  const params = new URLSearchParams(location.search);
+  const catId = params.get('category');
+  const itemId = params.get('item');
+  if(catId && CATALOG.categories.find(c=>c.id===catId)){
+    openCategory(catId);
+    if(itemId){
+      const item = findItem(catId, itemId);
+      if(item) openLightbox(item, CATALOG.categories.find(c=>c.id===catId));
+    }
+  }
+}
+boot();
+</script>
+</body>
+</html>
